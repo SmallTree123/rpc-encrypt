@@ -35,7 +35,9 @@ public class ModuleTests {
                 .publicKeyServer("MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCRGu4aUFA05+q/pHgSWxtN3qMpgFmE3Y2SA/8pX090ebENNPOdUHAA6P2tz9ICz/tNXimXHiHwFUKZCOJE75u8ifZQN3omZ9DDeEDrV9ulouOj6HWWuiaqnGH6zH4HW1vcCznEaBC8nqYkL+IQjZElkpagx7UMO94iNX2E4qwiNwIDAQAB")
                 .build();
         requestPayload = StatefulRequestPayload.builder().payload("[MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAIT/auDnUhe8G/rq5E8EdgNg0rPzd9+f7A+SQctc9YFUHdT7x8Xd1bZgr3WZevgzFglM2X6yxkzeEUscguD0A0zXTzLFcCWveHIEOLi+HTyz+u35kT9j3RY6ZcHoPL+iX/2vU2cDO7fsjUIXrTIaywpqFu9K6+8Mn5f+1chgejuDAgMBAAECgYBWbqOn2803DZHlhIexboW/dkoYlo597zF7gSJvJk+Kp/7nLmXLCnrcFoOQ2pjW+mRE0QO72jUTOXJlrPbFeO83Lcqc/M8SYMkgmgCCsQM+HI5r/qk8E34O6dtRu13n9g9uuFsIcZbLx+IX6qG0XuOKOlA4BAEsjbR3jGql2/edQQJBAMHO5bMXCqwl+03+2oVXCkXNNhC6jf7vsL1AzwDrjCbiF56tS3A9gNBVZZrnBo+0ey/fBp9IrG/qcBhvrYxI7WMCQQCvrQQD/P20sxzgL4/GBOMuWSLWsnTNa/2SMTgVB8p7fUr9xVceOPYTqnGVXbFa5StQJ5T6CJvMjWflbIdOOWNhAkAdnFvR8fpKdP8hWofOiY7jPUg+ZBJf2gU51RYLgPGH21FaiAWXn3331qRQd220NRIBLWUYnwThkIMR6LYuUdIbAkB0XPP1+FPMp3+O97ISBha9EonDEH3Ru6BAf52YQIrcdUeBBIAKIszMhe+qcl8RyA6Cj1VcsOsR+PBCxTpylAzBAkBKfCIS4eJcfWisk7ybOpdRhuoWYIte1w2Iu3O9yp1xRXweFSc24Jl2yU3L1pPbpG2YdezlfopWX9xS6+3jG45b, MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCE/2rg51IXvBv66uRPBHYDYNKz83ffn+wPkkHLXPWBVB3U+8fF3dW2YK91mXr4MxYJTNl+ssZM3hFLHILg9ANM108yxXAlr3hyBDi4vh08s/rt+ZE/Y90WOmXB6Dy/ol/9r1NnAzu37I1CF60yGssKahbvSuvvDJ+X/tXIYHo7gwIDAQAB]")
-                .clientInfo(clientInfo).build();
+                .clientInfo(clientInfo)
+                .decryptAfterValidate(true)
+                .build();
 //        loadKeyPairFromClasspath(clientInfo);
     }
 
@@ -77,7 +79,7 @@ public class ModuleTests {
         requestPayload.setMode(Mode.CLIENT);
         String sign = signature.clientSign(requestPayload);
         Assert.notNull(sign);
-//        System.out.println(sign);
+        System.out.println("sign:  "+sign);
         System.out.println(requestPayload);
     }
 

@@ -35,20 +35,24 @@ public class DefaultSignature implements Signature {
     @Override
     public String clientSign(StatefulRequestPayload requestPayload) {
         ClientInfo clientInfo = requestPayload.getClientInfo();
-        // signature part 1
+        //获取到需要加密的字符串
         String str2Encrypt = asymmetricCipher.getStr2Encrypt(requestPayload);
+        //非对称加密后的字符串
         String clientEncryptStr = asymmetricCipher.encrypt(str2Encrypt, clientInfo.getPublicKeyServer());
         String payload;
-        // encrypt the payload
+        //加密请求体
         if (requestPayload.isEncryptBeforeDigest()) {
             payload = symmetricCipher.encrypt(requestPayload);
         } else {
             payload = requestPayload.getPayload();
         }
-        // signature part 2
+
         String sign = clientEncryptStr;
+        //是否生成或校验摘要
         if (requestPayload.isDigest()) {
+            //加密请求体+盐
             String digestStr = digest.digestPayload(payload, clientInfo);
+            //组合sign签名：非对称加密后的字符串+摘要
             sign += (SIGN_SEPARATOR + digestStr);
         }
         requestPayload.setSign(sign);
